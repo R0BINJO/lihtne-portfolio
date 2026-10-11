@@ -1,6 +1,6 @@
-# Robin / Portfolio studio
+# My portfolio
 
-A practical portfolio with project images, category filters, and a private project editor. Native Python deployment for the Samsung A52/Termux; optional hardened Docker Compose deployment for a conventional Linux host.
+A green landing-page portfolio with project images, category filters, and a private project editor. Native Python deployment for the Samsung A52/Termux; optional hardened Docker Compose deployment for a conventional Linux host.
 
 [Public website](https://r0binjo.github.io/lihtne-portfolio/) · [GitHub source](https://github.com/R0BINJO/lihtne-portfolio) · [Automatic hosting instructions](#github-repository-and-automatic-hosting) · [A52 domain setup](#connect-a-public-domain-to-the-a52)
 

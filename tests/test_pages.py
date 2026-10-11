@@ -29,7 +29,8 @@ class PublicContentExportTests(TestCase):
 class PagesBuildTests(SimpleTestCase):
     def test_pages_build_paths_escaping_and_public_artifact(self):
         payload=json.loads((ROOT/'content/portfolio.json').read_text())
-        payload['profile']['name']='<script>UNSAFE_TEST</script>'
+        payload['profile']['name']='Private real name'
+        payload['profile']['intro']='<script>UNSAFE_TEST</script>'
         with tempfile.TemporaryDirectory() as directory:
             directory=Path(directory)
             source=directory/'content.json'
@@ -41,6 +42,10 @@ class PagesBuildTests(SimpleTestCase):
                 html=(output/'index.html').read_text()
                 self.assertIn(f'href="{base}/static/site.css"',html)
                 self.assertIn(f'src="{base}/static/site.js"',html)
+                self.assertNotIn('Private real name',html)
+                self.assertIn('<title>My portfolio</title>',html)
+                self.assertNotIn('class="brand-mark"',html)
+                self.assertIn('id="contact-title">Contact me',html)
                 self.assertNotIn('<script>UNSAFE_TEST',html)
                 self.assertIn('&lt;script&gt;UNSAFE_TEST',html)
                 self.assertIn('http-equiv="Content-Security-Policy"',html)

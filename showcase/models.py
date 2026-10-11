@@ -33,9 +33,9 @@ class Project(models.Model):
         return [tag.strip() for tag in self.tags.split(',') if tag.strip()][:8]
 
 class Profile(models.Model):
-    name = models.CharField(max_length=60, default='Robin')
+    name = models.CharField(max_length=60, default='My portfolio')
     role = models.CharField(max_length=100, default='Software, hardware & automation')
-    headline = models.CharField(max_length=90, default='Projects')
+    headline = models.CharField(max_length=90, default='My portfolio')
     intro = models.TextField(max_length=400, default='A selection of software, hardware, and automation projects.')
     about = models.TextField(max_length=2000, default='', blank=True)
     location = models.CharField(max_length=80, blank=True, default='Estonia')

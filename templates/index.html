@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ profile.name }} — Projects</title>
+<title>My portfolio</title>
 <meta name="description" content="{{ profile.intro }}">
-<meta name="theme-color" content="#0f1520"><meta property="og:title" content="{{ profile.name }} — Projects"><meta property="og:description" content="{{ profile.intro }}">
+<meta name="theme-color" content="#10120f"><meta property="og:title" content="My portfolio"><meta property="og:description" content="{{ profile.intro }}">
 <link rel="icon" href="{% static 'favicon.svg' %}" type="image/svg+xml">
 <link rel="preload" href="{% static 'fonts/space-grotesk.ttf' %}" as="font" type="font/ttf" crossorigin>
 <link rel="stylesheet" href="{% static 'site.css' %}"><script src="{% static 'site.js' %}" defer></script>
@@ -12,13 +12,10 @@
 <body>
 <a class="skip" href="#work">Skip to projects</a>
 <div class="page-shell">
-<header class="navigation">
-<a href="#" class="wordmark"><img class="brand-mark" src="{% static 'favicon.svg' %}" width="34" height="34" alt="">{{ profile.name }}</a>
-<nav aria-label="Main navigation"><a href="#work">Projects</a>{% if profile.github_url %}<a href="{{ profile.github_url }}" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>{% endif %}{% if profile.contact_email %}<a href="mailto:{{ profile.contact_email }}">Contact</a>{% endif %}</nav>
-</header>
+<header class="navigation"><nav aria-label="Main navigation"><a href="#work">Projects</a><a href="#contact">Contact me <span aria-hidden="true">↗</span></a></nav></header>
 <main>
-<section class="intro-section" aria-labelledby="page-title"><div><h1 id="page-title">{{ profile.headline }}</h1><p>{{ profile.intro }}</p></div>{% if profile.location %}<span class="location">{{ profile.location }}</span>{% endif %}</section>
-<section id="work" class="work" aria-label="Projects">
+<section class="hero" aria-labelledby="page-title"><div class="hero-copy"><h1 id="page-title">My portfolio</h1><p class="intro">{{ profile.intro }}</p><div class="hero-actions"><a class="button primary" href="#work">View projects <span aria-hidden="true">↘</span></a><a class="button secondary" href="#contact">Contact me</a></div></div><div class="orbital-scene" aria-hidden="true"><div class="scene-grid"></div><div class="orbit-system"><div class="planet"><div class="planet-noise"></div></div><div class="orbital-ring ring-one"></div><div class="orbital-ring ring-two"></div><div class="orbital-ring ring-three"></div><div class="satellite"></div></div></div></section>
+<section id="work" class="work" aria-labelledby="work-title"><h2 id="work-title" class="section-title">Projects</h2>
 <div class="work-toolbar"><div class="filters" role="group" aria-label="Filter projects"><button class="active" data-filter="all" aria-pressed="true">All projects <span>{{ projects|length }}</span></button><button data-filter="development" aria-pressed="false">Software</button><button data-filter="automation" aria-pressed="false">Automation</button><button data-filter="hardware" aria-pressed="false">Hardware</button></div></div>
 <div class="project-grid">
 {% for project in projects %}<article class="project-card {% if not project.cover_asset and not project.cover_url %}text-only{% endif %}" data-category="{{ project.category }}">
@@ -28,9 +25,9 @@
 </button></article>{% empty %}<p class="empty-state">No published projects.</p>{% endfor %}
 </div><p class="filter-empty" hidden>No projects in this category.</p><p class="project-count sr-only" aria-live="polite"></p>
 </section>
-{% if profile.about %}<section class="about-section"><h2>About</h2><p>{{ profile.about|linebreaksbr }}</p></section>{% endif %}
+<section id="contact" class="contact-section" aria-labelledby="contact-title"><h2 id="contact-title">Contact me</h2><div class="contact-links">{% if profile.contact_email %}<a class="button primary" href="mailto:{{ profile.contact_email }}">Email <span aria-hidden="true">↗</span></a>{% endif %}{% if profile.github_url %}<a class="button {% if profile.contact_email %}secondary{% else %}primary{% endif %}" href="{{ profile.github_url }}" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>{% endif %}{% if profile.linkedin_url %}<a class="button secondary" href="{{ profile.linkedin_url }}" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>{% endif %}</div></section>
 </main>
-<footer><span>{{ profile.name }}</span><div>{% if profile.contact_email %}<a href="mailto:{{ profile.contact_email }}">{{ profile.contact_email }}</a>{% endif %}{% if profile.linkedin_url %}<a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>{% endif %}<a href="#">Back to top ↑</a></div></footer>
+<footer><a href="#">Back to top ↑</a></footer>
 </div>
 {% for project in projects %}<dialog id="project-{{ project.pk }}" class="project-dialog" aria-labelledby="title-{{ project.pk }}"><button class="dialog-close" aria-label="Close project">✕</button>
 <div class="project-meta"><span>{{ project.get_category_display }}</span>{% if project.status %}<span class="project-status">{{ project.get_status_display }}</span>{% endif %}</div><h2 id="title-{{ project.pk }}">{{ project.title }}</h2>

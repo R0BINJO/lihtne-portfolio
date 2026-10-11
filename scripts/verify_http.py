@@ -1,15 +1,22 @@
 #!/usr/bin/env python3
 """Read-only HTTP verification of the two separate listeners."""
 import json
+import time
 from urllib.request import urlopen, Request
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 
 def fetch(port, path, method='GET'):
-    try:
-        result = urlopen(Request(f'http://127.0.0.1:{port}{path}', method=method), timeout=5)
-    except HTTPError as error:
-        result = error
-    return result.status, result.headers, result.read()
+    for attempt in range(10):
+        try:
+            result = urlopen(Request(f'http://127.0.0.1:{port}{path}', method=method), timeout=5)
+        except HTTPError as error:
+            result = error
+        except (URLError, TimeoutError):
+            if attempt == 9:
+                raise
+            time.sleep(0.5)
+            continue
+        return result.status, result.headers, result.read()
 
 status, headers, body = fetch(8090, '/')
 assert status == 200 and b'class="project-grid"' in body
