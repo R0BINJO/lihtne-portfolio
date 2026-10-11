@@ -45,5 +45,34 @@ class PagesBuildTests(SimpleTestCase):
                 self.assertIn('&lt;script&gt;UNSAFE_TEST',html)
                 self.assertIn('http-equiv="Content-Security-Policy"',html)
                 files={str(path.relative_to(output)) for path in output.rglob('*') if path.is_file()}
-                self.assertEqual(files,{'index.html','404.html','robots.txt','.nojekyll','static/site.css','static/site.js','static/favicon.svg','static/fonts/space-grotesk.ttf','static/fonts/OFL.txt'})
+                expected_images={f'static/{project["cover_asset"]}' for project in payload['projects'] if project.get('cover_asset')}
+                self.assertEqual(files,expected_images | {'index.html','404.html','robots.txt','.nojekyll','static/site.css','static/site.js','static/favicon.svg','static/fonts/space-grotesk.ttf','static/fonts/OFL.txt'})
                 self.assertIn("url('fonts/space-grotesk.ttf')",(output/'static/site.css').read_text())
+
+class PublicContentImportTests(TestCase):
+    def test_import_replaces_starters_preserves_unrelated_work_and_contact(self):
+        Profile.objects.create(pk=1, name='Before import', contact_email='owner@example.com')
+        starter=Project.objects.create(title='Orbit interface',summary='Demo',tags='Demo',is_concept=True,published=True)
+        custom=Project.objects.create(title='Unrelated project',summary='Keep',tags='Keep',published=True)
+        call_command('import_content',stdout=io.StringIO())
+        custom.refresh_from_db()
+        self.assertFalse(Project.objects.filter(pk=starter.pk).exists())
+        self.assertTrue(custom.published)
+        self.assertEqual(Profile.objects.get(pk=1).contact_email,'owner@example.com')
+        self.assertEqual(Project.objects.filter(published=True).count(),7)
+        self.assertEqual(Project.objects.exclude(cover_asset='').count(),4)
+        self.assertFalse(Project.objects.get(title='acq').cover_asset)
+        self.assertFalse(Project.objects.get(title='My own environment').cover_asset)
+
+    def test_invalid_bundled_image_rolls_back_import(self):
+        from django.core.exceptions import ValidationError
+        Profile.objects.create(pk=1,name='Original profile')
+        payload=json.loads((ROOT/'content/portfolio.json').read_text())
+        payload['projects'][0]['cover_asset']='../private/secret.key'
+        with tempfile.TemporaryDirectory() as directory:
+            source=Path(directory)/'content.json'
+            source.write_text(json.dumps(payload))
+            with self.assertRaises(ValidationError):
+                call_command('import_content',content=source,stdout=io.StringIO())
+        self.assertEqual(Profile.objects.get(pk=1).name,'Original profile')
+        self.assertEqual(Project.objects.count(),0)

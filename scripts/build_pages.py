@@ -30,13 +30,22 @@ def build(content_path, output, base_path=''):
     django.setup()
     from django.template.loader import render_to_string
 
-    categories = {'development': 'Development', 'design': 'Design', 'experiment': 'Experiment'}
+    categories = {'development': 'Software', 'design': 'Design', 'experiment': 'Experiment', 'hardware': 'Hardware', 'automation': 'Automation'}
+    statuses = {'in_progress': 'In development', 'completed': 'Completed', 'paused': 'Paused', '': ''}
     projects = []
+    assets = set(PUBLIC_ASSETS)
     for project in payload['projects']:
         project = dict(project)
         project['pk'] = int(project.pop('id'))
         project['tag_list'] = [tag.strip() for tag in project['tags'].split(',') if tag.strip()][:8]
         project['get_category_display'] = categories[project['category']]
+        project['get_status_display'] = statuses[project.get('status', '')]
+        cover = project.get('cover_asset', '')
+        if cover:
+            path = Path(cover)
+            if path.parts[0] != 'projects' or len(path.parts) != 2 or path.suffix not in ['.png', '.jpg', '.jpeg', '.webp'] or not all(character in 'abcdefghijklmnopqrstuvwxyz0123456789-_.' for character in path.name):
+                raise ValueError('Invalid bundled project image path.')
+            assets.add(cover)
         projects.append(SimpleNamespace(**project))
     html = render_to_string('index.html', {'profile': SimpleNamespace(**payload['profile']), 'projects': projects})
     # Pages cannot configure origin response headers. Enforce supported CSP directives in HTML.
@@ -47,7 +56,7 @@ def build(content_path, output, base_path=''):
     (output / '.nojekyll').touch()
     (output / 'robots.txt').write_text('User-agent: *\nAllow: /\n')
     (output / '404.html').write_text('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Not found</title></head><body><h1>Page not found</h1><p><a href="' + escape(base_path.rstrip('/') + '/', quote=True) + '">Return to portfolio</a></p></body></html>')
-    for asset in PUBLIC_ASSETS:
+    for asset in sorted(assets):
         source = ROOT / 'static' / asset
         target = output / 'static' / asset
         target.parent.mkdir(parents=True, exist_ok=True)

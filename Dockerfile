@@ -7,6 +7,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY portfolio portfolio
 COPY showcase showcase
 COPY templates templates
+COPY content content
 COPY static static
 COPY scripts scripts
 COPY manage.py serve_admin.py serve_public.py ./

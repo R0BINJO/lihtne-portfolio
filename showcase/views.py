@@ -31,7 +31,7 @@ def project_edit(request, pk=None):
         publish()
         messages.success(request, 'Project saved. Your public portfolio is up to date.')
         return redirect('dashboard')
-    return render(request, 'studio/form.html', {'form': form, 'title': 'Edit project' if project else 'New project', 'subtitle': 'Give your next idea a home.', 'project': project})
+    return render(request, 'studio/form.html', {'form': form, 'title': 'Edit project' if project else 'New project', 'subtitle': 'Project details.', 'project': project})
 
 @editor
 @require_POST
@@ -50,4 +50,4 @@ def profile_edit(request):
         publish()
         messages.success(request, 'Profile saved and portfolio updated.')
         return redirect('dashboard')
-    return render(request, 'studio/form.html', {'form': form, 'title': 'Your profile', 'subtitle': 'The person behind the projects.'})
+    return render(request, 'studio/form.html', {'form': form, 'title': 'Your profile', 'subtitle': 'Name, description, and contact links.'})

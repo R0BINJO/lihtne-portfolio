@@ -1,6 +1,6 @@
 # Robin / Portfolio studio
 
-A futuristic, responsive portfolio with animated orbital artwork and a private project editor. Native Python deployment for the Samsung A52/Termux; optional hardened Docker Compose deployment for a conventional Linux host.
+A practical portfolio with project images, category filters, and a private project editor. Native Python deployment for the Samsung A52/Termux; optional hardened Docker Compose deployment for a conventional Linux host.
 
 [Public website](https://r0binjo.github.io/lihtne-portfolio/) · [GitHub source](https://github.com/R0BINJO/lihtne-portfolio) · [Automatic hosting instructions](#github-repository-and-automatic-hosting) · [A52 domain setup](#connect-a-public-domain-to-the-a52)
 
@@ -19,9 +19,9 @@ Keep that terminal open. Visit:
 
 The username is `robin`. The generated password is in `private/admin-access.txt` on the phone; the deployment handoff also stores a private local copy in `private/a52-admin-access.txt`. Change it under Studio → Password. No public registration exists.
 
-Projects support title, summary, long description, category, tags, year, generative cover style or HTTPS image URL, live/source links, display order, concept label, and draft/published status. Saving updates the public export immediately; drafts never enter it. Profile edits control the name, headline, bio, availability, location, email, GitHub and LinkedIn links. Delete actions require confirmation.
+Projects support title, summary, long description, category, tags, bundled project images or an HTTPS image URL, development status, live/source links, display order, and draft/published status. Saving updates the public export immediately; drafts never enter it. Profile edits control the name, headline, bio, availability, location, email, GitHub and LinkedIn links. Delete actions require confirmation.
 
-Starter projects are clearly marked illustrative concepts. Replace them with your actual work. Contact details are intentionally unset until supplied.
+The six projects come from [projects.md](projects.md). Four have supplied photos/screenshots; acq and My own environment use text-only cards. Select a bundled image in the editor, provide an HTTPS cover URL, or leave both image fields blank. GitHub is linked in the navigation; email contact details can be added under Profile.
 
 ## Local development
 
@@ -327,7 +327,7 @@ cd "$HOME/projects/portfolio"
 .venv/bin/python scripts/verify_http.py
 ```
 
-That helper currently expects the starter headline. If you have changed it in the admin, its headline assertion may fail even when the service is healthy; use the HTTP status/security checks above to distinguish a content change from a deployment failure.
+The helper checks HTTP status, security headers, and blocked private routes without depending on a particular headline.
 
 ### 10. Edit projects after the domain is connected
 
@@ -461,7 +461,7 @@ After installing the Python dependencies:
 .venv/bin/python -m http.server 8080 --bind 127.0.0.1 --directory pages-dist
 ```
 
-Open `http://localhost:8080/` after the root-path build. Only the allowlisted visitor assets and exported HTML are packaged; backend code and private directories are excluded from the Pages artifact. The source repository still contains the backend code for running the A52 editor.
+Open `http://localhost:8080/` after the root-path build. Only the allowlisted visitor assets, referenced bundled project images, and exported HTML are packaged; backend code and private directories are excluded from the Pages artifact. The source repository still contains the backend code for running the A52 editor.
 
 ### Use a custom domain with GitHub Pages
 

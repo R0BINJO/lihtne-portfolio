@@ -22,3 +22,9 @@ Verified on the phone:
 Desktop/mobile/login/studio screenshots are in local `artifacts/`. A private tunnel was opened on the laptop for localhost:8090 and localhost:8091; reconnect later with `scripts/connect.sh`. Phone services are independent of that tunnel and the laptop.
 
 Outstanding: actual domain/DNS provider access, named outbound tunnel configuration and external HTTPS verification; device reboot/battery survival test. Public domain access has not been enabled. Strong isolation from other Termux services is not claimed; see SECURITY.md.
+
+## Practical project portfolio update — 2026-10-11
+
+The owner supplied `projects.md` and four original images. The site now shows all six documented projects, with images for the plant box, Fastbite, Gmail summaries, and Agent farm, and text-only cards for acq and My own environment. No project dates or unsupported features are displayed. The presentation uses compact practical headings, a moderately dark blue accent, and an RK SVG mark. Decorative hero graphics and slogans were removed.
+
+Bundled-image selection and development status are now editable in the private admin. A schema migration adds those fields, and a validated import replaces only the known starter concept records while preserving accounts, unrelated projects, and contact details. An A52 backup was taken before migration/import. Desktop and mobile browser checks passed for all six cards, four images, two text-only cards, category filtering, keyboard-dismissed image dialogs, and admin image/status editing. The updated suite contains 20 passing tests, including public image packaging and import rollback/privacy checks.

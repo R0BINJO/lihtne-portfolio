@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand
 from showcase.models import Profile, Project
 
 PROFILE_FIELDS = ['name', 'role', 'headline', 'intro', 'about', 'location', 'availability', 'contact_email', 'github_url', 'linkedin_url']
-PROJECT_FIELDS = ['id', 'title', 'summary', 'description', 'category', 'tags', 'year', 'artwork', 'cover_url', 'live_url', 'source_url', 'is_concept', 'position']
+PROJECT_FIELDS = ['id', 'title', 'summary', 'description', 'category', 'tags', 'year', 'artwork', 'cover_asset', 'cover_url', 'status', 'live_url', 'source_url', 'is_concept', 'position']
 
 class Command(BaseCommand):
     help = 'Write only publicly visible portfolio content as JSON to stdout.'

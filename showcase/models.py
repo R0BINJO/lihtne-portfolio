@@ -4,7 +4,9 @@ from django.core.validators import URLValidator, MinValueValidator, MaxValueVali
 https_only = URLValidator(schemes=['https'])
 
 class Project(models.Model):
-    CATEGORY_CHOICES = [('development', 'Development'), ('design', 'Design'), ('experiment', 'Experiment')]
+    CATEGORY_CHOICES = [('development', 'Software'), ('design', 'Design'), ('experiment', 'Experiment'), ('automation', 'Automation'), ('hardware', 'Hardware')]
+    COVER_CHOICES = [('projects/plant-box.jpg', 'Plant box'), ('projects/fastbite.png', 'Fastbite'), ('projects/gmail-summaries.png', 'Gmail summaries'), ('projects/agent-farm.png', 'Agent farm')]
+    STATUS_CHOICES = [('in_progress', 'In development'), ('completed', 'Completed'), ('paused', 'Paused')]
     ART_CHOICES = [('orbit', 'Orbital / lime'), ('wave', 'Waveform / violet'), ('grid', 'Architecture / ice')]
     title = models.CharField(max_length=100)
     summary = models.CharField(max_length=220)
@@ -13,7 +15,9 @@ class Project(models.Model):
     tags = models.CharField(max_length=140, help_text='Comma-separated, e.g. Python, Django, Design')
     year = models.PositiveIntegerField(default=2026, validators=[MinValueValidator(2000), MaxValueValidator(2100)])
     artwork = models.CharField(max_length=12, choices=ART_CHOICES, default='orbit')
-    cover_url = models.URLField(max_length=500, blank=True, validators=[https_only], help_text='Optional HTTPS image URL. Leave empty for animated artwork.')
+    cover_asset = models.CharField(max_length=160, blank=True, choices=COVER_CHOICES, verbose_name='Bundled image')
+    status = models.CharField(max_length=20, blank=True, choices=STATUS_CHOICES)
+    cover_url = models.URLField(max_length=500, blank=True, validators=[https_only], help_text='Optional HTTPS image URL. Leave both image fields empty for a text-only project.')
     live_url = models.URLField(max_length=500, blank=True, validators=[https_only])
     source_url = models.URLField(max_length=500, blank=True, validators=[https_only])
     is_concept = models.BooleanField(default=False, help_text='Label illustrative work as a concept.')
@@ -30,12 +34,12 @@ class Project(models.Model):
 
 class Profile(models.Model):
     name = models.CharField(max_length=60, default='Robin')
-    role = models.CharField(max_length=100, default='Developer & curious maker')
-    headline = models.CharField(max_length=90, default='Building what comes next.')
-    intro = models.TextField(max_length=400, default='A space for ideas, interfaces, and experiments. Exploring the place where thoughtful design meets working code.')
-    about = models.TextField(max_length=2000, default='I like turning a what-if into something you can actually use. This is my collection of projects, small experiments, and things learned along the way.')
+    role = models.CharField(max_length=100, default='Software, hardware & automation')
+    headline = models.CharField(max_length=90, default='Projects')
+    intro = models.TextField(max_length=400, default='A selection of software, hardware, and automation projects.')
+    about = models.TextField(max_length=2000, default='', blank=True)
     location = models.CharField(max_length=80, blank=True, default='Estonia')
-    availability = models.CharField(max_length=80, default='Open to interesting ideas')
+    availability = models.CharField(max_length=80, default='', blank=True)
     contact_email = models.EmailField(blank=True)
     github_url = models.URLField(blank=True, validators=[https_only])
     linkedin_url = models.URLField(blank=True, validators=[https_only])

@@ -12,7 +12,7 @@ def fetch(port, path, method='GET'):
     return result.status, result.headers, result.read()
 
 status, headers, body = fetch(8090, '/')
-assert status == 200 and b'Building what comes next.' in body
+assert status == 200 and b'class="project-grid"' in body
 assert "form-action 'none'" in headers['Content-Security-Policy']
 assert headers['X-Frame-Options'] == 'DENY'
 assert headers['Strict-Transport-Security'] == 'max-age=31536000'
