@@ -40,7 +40,7 @@ class PagesBuildTests(SimpleTestCase):
                 result=subprocess.run([sys.executable,str(ROOT/'scripts/build_pages.py'),'--content',str(source),'--output',str(output),'--base-path',base],capture_output=True,text=True)
                 self.assertEqual(result.returncode,0,result.stderr)
                 html=(output/'index.html').read_text()
-                self.assertIn(f'href="{base}/static/site.css?v=green-landing-r"',html)
+                self.assertIn(f'href="{base}/static/site.css?v=green-landing-no-planet"',html)
                 self.assertIn(f'src="{base}/static/site.js"',html)
                 self.assertNotIn('Private real name',html)
                 self.assertIn('<title>My portfolio</title>',html)

@@ -32,3 +32,7 @@ Bundled-image selection and development status are now editable in the private a
 ## Anonymous green landing-page update — 2026-10-11
 
 The latest owner instruction restores the green landing-page structure while retaining only the My portfolio heading, the existing project introduction, practical project information, and Contact me. Public names and page logos are removed, including title/social metadata; the public-content profile uses My portfolio. The browser favicon is a plain white R on black. The six projects and four supplied images remain, with text-only cards for the last two projects. GitHub is the current contact link because no email address is configured.
+
+## Hero planet removal — 2026-10-11
+
+Removed the planet, rings, satellite, grid, and associated animation styles from the landing-page hero. The text-only hero has less empty vertical space and keeps My portfolio, the existing introduction, project/contact buttons, green theme, and the white-R favicon. A replacement visual is left for the owner to select.
