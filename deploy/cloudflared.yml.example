@@ -1,0 +1,8 @@
+# Copy to a PRIVATE directory on the A52 after creating a named Cloudflare tunnel.
+# Replace the domain, UUID, and credential path. Do not publish the credential JSON.
+tunnel: REPLACE_WITH_TUNNEL_UUID
+credentials-file: /data/data/com.termux/files/home/.cloudflared/REPLACE_WITH_TUNNEL_UUID.json
+ingress:
+  - hostname: portfolio.example.com
+    service: http://127.0.0.1:8090
+  - service: http_status:404

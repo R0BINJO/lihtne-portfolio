@@ -1,0 +1,13 @@
+.venv
+private
+published
+staticfiles
+backups
+.git
+.agents
+.codex
+.aws
+artifacts
+**/__pycache__
+node_modules
+.env

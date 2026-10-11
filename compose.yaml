@@ -1,0 +1,45 @@
+name: robin-portfolio
+services:
+  public:
+    build:
+      context: .
+      target: public
+    restart: unless-stopped
+    ports: ["127.0.0.1:8090:8090"]
+    volumes: ["published:/app/published:ro"]
+    read_only: true
+    tmpfs: ["/tmp:noexec,nosuid,size=16m"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 128m
+    pids_limit: 64
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8090/healthz', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    logging:
+      driver: json-file
+      options: {max-size: "5m", max-file: "3"}
+  admin:
+    build:
+      context: .
+      target: admin
+    restart: unless-stopped
+    environment: {ADMIN_BIND: "0.0.0.0"}
+    ports: ["127.0.0.1:8091:8091"]
+    volumes: ["private:/app/private", "published:/app/published", "staticfiles:/app/staticfiles", "backups:/app/backups"]
+    read_only: true
+    tmpfs: ["/tmp:noexec,nosuid,size=32m"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 256m
+    pids_limit: 64
+    logging:
+      driver: json-file
+      options: {max-size: "5m", max-file: "3"}
+volumes:
+  private:
+  published:
+  staticfiles:
+  backups:

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "profile": {
+    "name": "Robin",
+    "role": "Developer & curious maker",
+    "headline": "Building what comes next.",
+    "intro": "A space for ideas, interfaces, and experiments. Exploring the place where thoughtful design meets working code.",
+    "about": "I like turning a what-if into something you can actually use. This is my collection of projects, small experiments, and things learned along the way.",
+    "location": "Estonia",
+    "availability": "Open to interesting ideas",
+    "contact_email": "",
+    "github_url": "",
+    "linkedin_url": ""
+  },
+  "projects": [
+    {
+      "id": 1,
+      "title": "Orbit interface",
+      "summary": "A study in focus. An imagined workspace that brings a little calm to a complex world.",
+      "description": "An illustrative concept included to demonstrate this portfolio. Replace it with your own work in the private studio.",
+      "category": "design",
+      "tags": "Interface design, Interaction",
+      "year": 2026,
+      "artwork": "orbit",
+      "cover_url": "",
+      "live_url": "",
+      "source_url": "",
+      "is_concept": true,
+      "position": 0
+    },
+    {
+      "id": 2,
+      "title": "Signal / noise",
+      "summary": "Exploring the rhythm between data, motion, and a more expressive web.",
+      "description": "An illustrative concept included to demonstrate this portfolio. Replace it with your own work in the private studio.",
+      "category": "experiment",
+      "tags": "Creative coding, Motion",
+      "year": 2026,
+      "artwork": "wave",
+      "cover_url": "",
+      "live_url": "",
+      "source_url": "",
+      "is_concept": true,
+      "position": 1
+    },
+    {
+      "id": 3,
+      "title": "Small systems",
+      "summary": "An exploration of modular tools and the beauty of making complex things feel simple.",
+      "description": "An illustrative concept included to demonstrate this portfolio. Replace it with your own work in the private studio.",
+      "category": "development",
+      "tags": "Systems, Prototyping",
+      "year": 2026,
+      "artwork": "grid",
+      "cover_url": "",
+      "live_url": "",
+      "source_url": "",
+      "is_concept": true,
+      "position": 2
+    }
+  ]
+}
